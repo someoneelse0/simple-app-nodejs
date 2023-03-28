@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script>document.cookie?console.log("OK"):location="http://localhost:3000/login";</script>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width,initial-scale=1.0" />
+		<title>Config</title>
+		<link rel="stylesheet" href="styles.css" />
+	</head>
+	<body>
+		<header>
+			<h1>Welcome to Config !</h1>
+		</header>
+		<nav>
+			<ul>
+				<li><a href="/index">Go to Index</a></li>
+				<li><a href="/chat">Go to Chat</a></li>
+				<li><a href="/mailer">Go to Mailer Utility</a></li>
+				<li><a href="/config/map">Go to Map</a></li>
+				<li><a class="a">Go to Delete Account Permanently</a></li>
+				<li><a class="a">Go to Logout</a></li>
+			</ul>
+		</nav>
+		<script>
+			let a=document.getElementsByClassName("a");
+			a[0].addEventListener("click",function(e){
+				location="http://localhost:3000/config/delaccper/"+document.cookie.split("=")[0];
+			},false);
+			a[1].addEventListener("click",function(){
+				location="http://localhost:3000/config/logout/"+document.cookie.split("=")[0];
+			},false);
+		</script>
+	</body>
+</html>

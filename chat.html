@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script>document.cookie!=""?console.log("OK"):location="/login";</script>
+		<base target="_blank" />
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width,initial-scale=1.0" />
+		<title>Chat</title>
+		<link rel="stylesheet" href="styles.css" />
+		<script src="/socket.io/socket.io.js"></script>
+	</head>
+	<body>
+		<header>
+			<h1>Welcome to Chat !</h1>
+		</header>
+		<ul>
+			<li><a href="/index">Go to Index</a></li>
+			<li><a href="/mailer">Go to Mailer Utility</a></li>
+			<li><a href="/config">Go to Config</a></li>
+		</ul>
+		<div class="dco">
+			<ul class="uco">
+				<li>List of files to download</li>
+			</ul>
+		</div>
+		<br />
+		<div class="dct">
+			<div class="dcth"></div>
+			<p>Message:</p>
+			<input type="text" class="message" />
+			<br />
+			<button class="btn">Send</button>
+			<br />
+			<br />
+			<form action="upload" method="POST" enctype="multipart/form-data">
+				<fieldset>
+					<legend>UPLOAD</legend>
+					<label>Upload a file:</label>
+					<input type="file" name="ifile" class="ifile" />
+					<button class="btn">Send</button>
+				</fieldset>
+			</form>
+		</div>
+		<script>
+			let i=io();
+			let dco=document.getElementsByClassName("dco")[0],
+			uco=document.getElementsByClassName("uco")[0],
+			dct=document.getElementsByClassName("dct")[0],
+			dcth=document.getElementsByClassName("dcth")[0],
+			message=document.getElementsByClassName("message")[0],
+			btn=document.getElementsByClassName("btn"),
+			ifile=document.getElementsByClassName("ifile")[0];
+			btn[0].addEventListener("click",function(e){
+				e.preventDefault();
+				if(message.value!=""){
+					i.emit("f",{m:message.value,ck:document.cookie});
+				}else{
+					message.placeholder="¡¡ FIELD REQUIRED !!";
+				}
+			},false);
+			btn[1].addEventListener("click",function(e){
+				if(ifile.value!=""){
+					i.emit("ff",{file:ifile.value,ck:document.cookie});
+				}else{
+					e.preventDefault();
+					alert("¡¡ FIELD REQUIRED !!");
+				}
+			},false);
+			i.on("f",(d)=>{
+				dcth.innerHTML+=d+"<br />";
+			});
+			i.on("ff",(dd)=>{
+				uco.innerHTML+=dd+"<br />";
+			});
+		</script>
+	</body>
+</html>
